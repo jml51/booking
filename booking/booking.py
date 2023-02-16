@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 class Booking (webdriver.Chrome):
+    
     def __init__(SELF, driver_path=r"C:\Program Files (x86)\chormedriver.exe", teardown=False):
         SELF.driver_path = driver_path
         SELF.teardown = teardown
@@ -15,12 +16,18 @@ class Booking (webdriver.Chrome):
         SELF.implicitly_wait(3)
         SELF.maximize_window()
 
+
+
     def __exit__(SELF, exc_type, exc, traceback):
         if SELF.teardown:
             SELF.quit()
         
+
+
     def land_first_page(SELF):
         SELF.get(const.BASE_URL)   
+
+
 
     def change_currency(SELF, currency):
 
@@ -35,15 +42,24 @@ class Booking (webdriver.Chrome):
 
 
     def select_place_to_go(SELF, place_to_go):
+
         place= SELF.find_element(By.NAME, 'ss')
         place.clear()
         place.send_keys(place_to_go)
 
-        first_result = SELF.find_element(
-            By.CSS_SELECTOR, '#indexsearch > div.hero-banner-searchbox > div > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(1) > div > div > div.a7631de79e > ul > li:nth-child(1) > div')
+        first_result = SELF.find_element(By.CSS_SELECTOR, '#indexsearch > div.hero-banner-searchbox > div > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(1) > div > div > div.a7631de79e > ul > li:nth-child(2) > div')
         first_result.click()
 
-        time.sleep(10)
+        time.sleep(2)
+
+
+
+    def select_datas(SELF, check_in_date, check_out_date):
+        check_in = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')
+        check_in.click()
+
+        check_out = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_out_data}"]')
+        check_out.click()
 
 
 
