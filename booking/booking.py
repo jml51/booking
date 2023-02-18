@@ -25,8 +25,15 @@ class Booking (webdriver.Chrome):
 
 
     def land_first_page(SELF):
-        SELF.get(const.BASE_URL)   
+        try:
+            SELF.get(const.BASE_URL)   
+        except:
+            print("")
 
+    
+    def cookie ( SELF):
+        cookie = SELF.find_element(By.ID , "onetrust-accept-btn-handler")
+        cookie.click()
 
 
     def change_currency(SELF, currency):
@@ -43,27 +50,64 @@ class Booking (webdriver.Chrome):
 
     def select_place_to_go(SELF, place_to_go):
 
-        place= SELF.find_element(By.NAME, 'ss')
+        element = WebDriverWait(SELF, 10).until(EC.presence_of_element_located(
+            (By.ID , ":Ra9:")))
+
+        place= SELF.find_element(By.ID , ":Ra9:")
         place.clear()
         place.send_keys(place_to_go)
 
-        first_result = SELF.find_element(By.CSS_SELECTOR, '#indexsearch > div.hero-banner-searchbox > div > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(1) > div > div > div.a7631de79e > ul > li:nth-child(2) > div')
+        element = WebDriverWait(SELF, 10).until(EC.presence_of_element_located(
+            (By.CSS_SELECTOR, 'li[data-i="0"]')))
+
+        first_result = SELF.find_element(By.CSS_SELECTOR, 'li[data-i="0"]')
         first_result.click()
 
-        time.sleep(2)
+        
 
 
 
     def select_datas(SELF, check_in_date, check_out_date):
-        check_in = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')
-        check_in.click()
 
-        check_out = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_out_data}"]')
-        check_out.click()
-
-
+        element = WebDriverWait(SELF, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')))
+        
+        data_in = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')
+        data_in.click()
 
 
+        element = WebDriverWait(SELF, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f'td[data-date="{check_out_date}"]')))
+
+
+        data_out = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_out_date}"]')
+        data_out.click()
+
+    def select_adults (SELF, count=2):
+        adults_bt = SELF.find_element(By.ID , 'xp__guests__toggle')
+        adults_bt.click()
+
+        time.sleep(2)
+
+        while True:
+
+            adults_decres = SELF.find_element(By.CSS_SELECTOR, 'button[aria-label="Diminuir o número de Adultos"]')
+            adults_decres.click()
+            
+
+            adults_values_elemet = SELF.find_element( By.ID , "group_adults")
+            adults_values = adults_values_elemet.get_attribute("value")
+
+        
+            if int(adults_values) == 1:
+                break
+
+        adults_incres = SELF.find_element(By.CSS_SELECTOR, 'Button[aria-label="Aumentar o número de Adultos"]')
+        
+        for _ in  range(count - 1):
+            adults_incres.click()
+
+    def click_search(SELF):
+        click = SELF.find_element(By.CSS_SELECTOR, 'button[type="submit"]' )
+        time.sleep(10)
 
 
 
