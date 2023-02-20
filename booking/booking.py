@@ -13,7 +13,9 @@ class Booking (webdriver.Chrome):
         SELF.driver_path = driver_path
         SELF.teardown = teardown
         os.environ['PATH'] += SELF.driver_path
-        super(Booking, SELF).__init__()
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        super(Booking, SELF).__init__(options=options)
         SELF.implicitly_wait(3)
         SELF.maximize_window()
 
@@ -51,7 +53,7 @@ class Booking (webdriver.Chrome):
 
     def select_place_to_go(SELF, place_to_go):
 
-        element = WebDriverWait(SELF, 10).until(EC.presence_of_element_located(
+        element = WebDriverWait(SELF, 100).until(EC.presence_of_element_located(
             (By.ID , ":Ra9:")))
 
         place= SELF.find_element(By.ID , ":Ra9:")
@@ -59,12 +61,10 @@ class Booking (webdriver.Chrome):
         place.send_keys(place_to_go)
 
         element = WebDriverWait(SELF, 10).until(EC.presence_of_element_located(
-            (By.CSS_SELECTOR, 'li[data-i="0"]')))
+            (By.CSS_SELECTOR, '#indexsearch > div.hero-banner-searchbox > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(1) > div > div > div.a7631de79e > ul > li:nth-child(2)')))
 
-        first_result = SELF.find_element(By.CSS_SELECTOR, 'li[data-i="0"]')
+        first_result = SELF.find_element(By.CSS_SELECTOR, '#indexsearch > div.hero-banner-searchbox > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(1) > div > div > div.a7631de79e > ul > li:nth-child(2)')
         first_result.click()
-
-        
 
 
 
@@ -72,16 +72,13 @@ class Booking (webdriver.Chrome):
 
         element = WebDriverWait(SELF, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')))
         
-        data_in = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_in_date}"]')
-        data_in.click()
+        data_in = SELF.find_element(By.CSS_SELECTOR, 'td[class="e2f0d47913"]')
+        data_in_in = data_in.find_element(By.CSS_SELECTOR, 'span[data-date="{check_in_date}"]')
+        data_in_in.click()
 
-
-        element = WebDriverWait(SELF, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f'td[data-date="{check_out_date}"]')))
-
-
-        data_out = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_out_date}"]')
-        data_out.click()
-
+        data_out = SELF.find_element(By.CSS_SELECTOR, 'td[class="e2f0d47913"]')
+        data_out_in = data_in.find_element(By.CSS_SELECTOR, 'span[data-date="{check_out_date}"]')
+        data_out_in.click()
 
 
     def select_adults (SELF, count=2):
@@ -121,7 +118,14 @@ class Booking (webdriver.Chrome):
     def booking_filtration(SELF):
         filtration = BookingFiltration(driver = SELF)
 
-        filtration.stars()
+        #filtration.stars(4)
+        filtration.find2()
+
+    def booking_find(SELF):
+        filtration = Find3(driver = SELF)
+
+        #filtration.stars(4)
+        filtration.find2()
 
 
 
@@ -133,7 +137,5 @@ class Booking (webdriver.Chrome):
 
 
 
-
-
-
-
+#indexsearch > div.hero-banner-searchbox > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(2) > div > div.dec3155a06 > div > div > div.fa3f76ae6b > div:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(1)
+#indexsearch > div.hero-banner-searchbox > div > div > form > div.ffa9856b86.db27349d3a > div:nth-child(2) > div > div.dec3155a06 > div > div > div.fa3f76ae6b > div:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)
