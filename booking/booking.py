@@ -3,6 +3,7 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from booking.booking_filtration import BookingFiltration
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
@@ -81,6 +82,8 @@ class Booking (webdriver.Chrome):
         data_out = SELF.find_element(By.CSS_SELECTOR, f'td[data-date="{check_out_date}"]')
         data_out.click()
 
+
+
     def select_adults (SELF, count=2):
         adults_bt = SELF.find_element(By.ID , 'xp__guests__toggle')
         adults_bt.click()
@@ -105,9 +108,20 @@ class Booking (webdriver.Chrome):
         for _ in  range(count - 1):
             adults_incres.click()
 
+
+
+
     def click_search(SELF):
         click = SELF.find_element(By.CSS_SELECTOR, 'button[type="submit"]' )
         time.sleep(10)
+
+
+
+
+    def booking_filtration(SELF):
+        filtration = BookingFiltration(driver = SELF)
+
+        filtration.stars()
 
 
 
