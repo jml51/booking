@@ -15,7 +15,6 @@ class Find3:
         element = lists.find_elements(By.CSS_SELECTOR, 'div[data-testid="property-card"]')
 
         
-        
         for elements in element:
 
             title = elements.find_element(By.TAG_NAME, 'h3').text
@@ -27,6 +26,7 @@ class Find3:
                
             except:
                 pass
+            
             try:
                 price = elements.find_element(By.CSS_SELECTOR, 'div[data-testid="price-and-discounted-price"]').text
                 
