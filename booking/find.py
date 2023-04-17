@@ -10,6 +10,7 @@ class Find3:
         
     def find2 (SELF):
 
+        elemen = WebDriverWait(SELF, 10).until(EC.presence_of_element_located((By.ID, "search_results_table")))
         lists = SELF.driver.find_element(By.ID, "search_results_table")
 
         element = lists.find_elements(By.CSS_SELECTOR, 'div[data-testid="property-card"]')
@@ -23,16 +24,20 @@ class Find3:
             
             try:
                 price = elements.find_element(By.CSS_SELECTOR, 'span[data-testid="price-and-discounted-price"]').text
-               
+    
             except:
                 pass
             
+            """
             try:
                 price = elements.find_element(By.CSS_SELECTOR, 'div[data-testid="price-and-discounted-price"]').text
                 
             except:
                 pass
-    
+            """
+
+
+                
             print(title)
             print(link)
             print(price)
